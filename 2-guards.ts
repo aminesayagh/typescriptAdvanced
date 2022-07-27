@@ -1,3 +1,5 @@
+// wrong
+
 const printDeliminated = (doc: DeliminatedDocument) => {
   /* ... */
 };
@@ -12,4 +14,26 @@ const printDocument = (doc: DelimatedDocument | PlaintextDocument) => {
   'PlaintextDocument' but required in type 'DelimatedDocument'.
   */
   printDeliminated(doc); // error
+}
+
+// right
+
+type DeliminatedDocument = {
+  text: string,
+  separator: 'sep',
+}
+
+type PlaintextDocument = {
+  text: string
+}
+
+const printDeliminated = (doc: DeliminatedDocument) => {};
+const printPlaintext = (doc: PlaintextDocument) => {};
+
+const printDocument = (doc: DeliminatedDocument | PlaintextDocument) => {
+  if('separator' in doc){
+     printDeliminated(doc);
+  } else {
+     printPlaintext(doc);
+  }
 }
